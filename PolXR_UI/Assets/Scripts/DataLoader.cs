@@ -147,7 +147,7 @@ public class DataLoader : MonoBehaviour
         DisableAllRadarObjects(radarContainer);
 
 
-        DisableMenus();
+        //DisableMenus();
     }
 
     private void DisableAllRadarObjects(GameObject radarContainer)

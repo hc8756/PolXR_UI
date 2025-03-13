@@ -1,11 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
      [SerializeField] public Transform user;
+     public GameObject mainMenu;
+     public GameObject radarMenu;
+
      private Vector3 offset=new Vector3(0.0f,-0.6f,0.4f);
     float radius= 0.2f;
     
@@ -40,7 +45,10 @@ public class MenuController : MonoBehaviour
         Vector3 directionToCamera= user.position-transform.position;
         directionToCamera.y=0;
         transform.rotation=Quaternion.LookRotation(-directionToCamera, Vector3.up);
-
-
     }
+
+    public void ToggleMain(){
+        mainMenu.SetActive(!mainMenu.activeSelf);
+    }
+
 }
