@@ -11,7 +11,7 @@ public class MenuController : MonoBehaviour
      public GameObject mainMenu;
      public GameObject radarMenu;
 
-     private Vector3 offset=new Vector3(0.0f,-0.6f,0.4f);
+     private Vector3 offset=new Vector3(0.0f,-0.7f,0.4f);
     float radius= 0.2f;
     
 
@@ -20,21 +20,6 @@ public class MenuController : MonoBehaviour
     }
     void Update()
     {
-        /*
-        Vector3 newPosition = user.position+offset;
-        //newPosition.y = 1f;
-        
-        Vector3 direction= user.position- transform.position;
-        direction.x=20;
-
-        
-        //transform.rotation=Quaternion.LookRotation(transform.position-user.position,user.up);
-        //transform.rotation = user.transform.rotation;
-        transform.rotation = Quaternion.Euler(0, user.transform.eulerAngles.y, 0);
-        Debug.Log(transform.rotation);
-
-        transform.position = newPosition;
-        transform.position = user.position + user.rotation*offset;*/
 
         Vector3 waistPosition= user.position + Vector3.up * offset.y;
         Vector3 cameraForward= user.forward;
@@ -50,5 +35,10 @@ public class MenuController : MonoBehaviour
     public void ToggleMain(){
         mainMenu.SetActive(!mainMenu.activeSelf);
     }
+
+    public void ToggleRadar(){
+        radarMenu.SetActive(!radarMenu.activeSelf);
+    }
+
 
 }

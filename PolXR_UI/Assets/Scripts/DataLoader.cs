@@ -542,8 +542,8 @@ public class DataLoader : MonoBehaviour
 
     void OpenHome()
     {
-        mainMenu.SetActive(true);
-        radarMenu.SetActive(false);
+        //mainMenu.SetActive(true);
+        //radarMenu.SetActive(false);
     }
 
     void GoToRadargram()
@@ -584,6 +584,7 @@ public class DataLoader : MonoBehaviour
 
     private void SetButtonsForMenus()
     {
+        /*
         Button rmClose = GameObject.Find("RadarMenu/Buttons/ButtonClose").GetComponent<Button>();
         rmClose.onClick.AddListener(CloseRadarMenu);
         Button rmReset = GameObject.Find("RadarMenu/Buttons/ButtonReset").GetComponent<Button>(); // NOT IMPLEMENTED
@@ -595,13 +596,17 @@ public class DataLoader : MonoBehaviour
         Button rmResetRadar = GameObject.Find("RadarMenu/Buttons/ButtonResetRadar").GetComponent<Button>();
         rmResetRadar.onClick.AddListener(ResetRadargram);
         Button rmMeasure = GameObject.Find("RadarMenu/Buttons/ButtonMeasure").GetComponent<Button>(); // NOT IMPLEMENTED
-
+        
         Button mmWrite = GameObject.Find("MainMenu/Buttons/ButtonWrite").GetComponent<Button>(); // NOT IMPLEMENTED
-        Button mmReset = GameObject.Find("MainMenu/Buttons/ButtonReset").GetComponent<Button>(); // NOT IMPLEMENTED
         Button mmClose = GameObject.Find("MainMenu/Buttons/ButtonClose").GetComponent<Button>();
         mmClose.onClick.AddListener(CloseMainMenu);
         Button mmMiniMap = GameObject.Find("MainMenu/Buttons/ButtonMiniMap").GetComponent<Button>(); // NOT IMPLEMENTED
+        */
+        
+        //buttons currently active in scene
         Button mmLoadScene = GameObject.Find("MainMenu/Buttons/ButtonLoadScene").GetComponent<Button>(); // NOT IMPLEMENTED
+        Button mmReset = GameObject.Find("MainMenu/Buttons/ButtonResetScene").GetComponent<Button>(); // NOT IMPLEMENTED
+        Button mmLayerPicking = GameObject.Find("MainMenu/Buttons/ButtonLayerPicking").GetComponent<Button>(); // NOT IMPLEMENTED
         Button mmHomeScreen = GameObject.Find("MainMenu/Buttons/ButtonHomeScreen").GetComponent<Button>(); // NOT IMPLEMENTED
     }
 
