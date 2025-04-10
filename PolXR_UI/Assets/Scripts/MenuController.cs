@@ -12,7 +12,7 @@ public class MenuController : MonoBehaviour
      public GameObject radarMenu;
 
      private Vector3 offset=new Vector3(0.0f,-0.7f,0.4f);
-    float radius= 0.2f;
+    float radius= 0.15f;
     
 
     void Start()
