@@ -6,6 +6,8 @@ using TMPro;
 
 public class HomeMenuController : MonoBehaviour
 {
+    public Transform user;
+    private float distance=0.6f;
     public GameObject dropdownPrefab;
     public Transform dropdownContainer;
     public Button addButton;
@@ -37,13 +39,14 @@ public class HomeMenuController : MonoBehaviour
     }
     
     public void DeleteDropdown(GameObject dropdownObj){
-
-        int deletedIndex= dropdownList.IndexOf(dropdownObj);
-        dropdownList.RemoveAt(deletedIndex);
-        Destroy(dropdownObj);
-        for(int i=deletedIndex;i<dropdownList.Count;i++){
-            RectTransform rect = dropdownList[i].GetComponent<RectTransform>();
-            rect.anchoredPosition=GetPositonForIndex(i);
+        if(dropdownList.Count>1){
+            int deletedIndex= dropdownList.IndexOf(dropdownObj);
+            dropdownList.RemoveAt(deletedIndex);
+            Destroy(dropdownObj);
+            for(int i=deletedIndex;i<dropdownList.Count;i++){
+                RectTransform rect = dropdownList[i].GetComponent<RectTransform>();
+                rect.anchoredPosition=GetPositonForIndex(i);
+            }
         }
     }
 
@@ -69,6 +72,13 @@ public class HomeMenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Vector3 cameraForward= user.forward;
+        cameraForward.y=0;
+        cameraForward.Normalize();
+
+        transform.position=user.position + cameraForward*distance;
+        Vector3 directionToCamera= user.position-transform.position;
+        transform.rotation=Quaternion.LookRotation(-directionToCamera, Vector3.up);
+    
     }
 }
