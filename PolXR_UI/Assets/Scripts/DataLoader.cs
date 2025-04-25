@@ -144,6 +144,9 @@ public class DataLoader : MonoBehaviour
         // Set Button Functionality
         SetButtonsForMenus();
 
+        // Set Slider Functionality
+        SetSlidersForMenus(radarContainer);
+
         DisableAllRadarObjects(radarContainer);
 
 
@@ -608,6 +611,24 @@ public class DataLoader : MonoBehaviour
         Button mmReset = GameObject.Find("MainMenu/Buttons/ButtonResetScene").GetComponent<Button>(); // NOT IMPLEMENTED
         Button mmLayerPicking = GameObject.Find("MainMenu/Buttons/ButtonLayerPicking").GetComponent<Button>(); // NOT IMPLEMENTED
         Button mmHomeScreen = GameObject.Find("MainMenu/Buttons/ButtonHomeScreen").GetComponent<Button>(); // NOT IMPLEMENTED
+    }
+
+    private void SetSlidersForMenus(GameObject radarContainer){
+        Slider rmOpacity= GameObject.Find("RadarMenu/Sliders/Opacity").GetComponent<Slider>();
+        rmOpacity.onValueChanged.AddListener((value)=>UpdateOpacity(value,radarContainer));
+    }
+
+    void UpdateOpacity(float value,GameObject radarContainer){
+        foreach (Transform segment in radarContainer.transform)
+        {
+            foreach (Transform child in segment)
+            {
+                if (child.name.StartsWith("Data")) // Radar objects start with "Data"
+                {
+                    child.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, value);
+                }
+            }
+        }
     }
 
     void DisableMenus()

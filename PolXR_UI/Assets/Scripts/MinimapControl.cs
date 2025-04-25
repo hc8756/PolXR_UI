@@ -29,6 +29,7 @@ public class MinimapControl : MonoBehaviour//, IMixedRealityPointerHandler
     {
         PositionObj.SetActive(true);
         string sceneName = SceneManager.GetActiveScene().name == "antarctica" ? "Antarctica" : "Petermann";
+        sceneName = "surface";
         Location = GameObject.Find(sceneName).transform;
     }
 

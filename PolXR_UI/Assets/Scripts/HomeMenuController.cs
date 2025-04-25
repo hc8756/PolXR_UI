@@ -7,7 +7,7 @@ using TMPro;
 public class HomeMenuController : MonoBehaviour
 {
     public Transform user;
-    private float distance=0.6f;
+    private float distance=0.5f;
     public GameObject dropdownPrefab;
     public Transform dropdownContainer;
     public Button addButton;
@@ -70,15 +70,19 @@ public class HomeMenuController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        Vector3 cameraForward= user.forward;
-        cameraForward.y=0;
-        cameraForward.Normalize();
+void Update()
+{
+    Vector3 cameraForward = user.forward;
+    cameraForward.y = 0;
+    cameraForward.Normalize();
+    Vector3 targetPosition = user.position + cameraForward * distance;
+    Vector3 directionToCamera = user.position - transform.position;
+    directionToCamera.y = 0;
+    Quaternion targetRotation = Quaternion.LookRotation(-directionToCamera, Vector3.up);
 
-        transform.position=user.position + cameraForward*distance;
-        Vector3 directionToCamera= user.position-transform.position;
-        transform.rotation=Quaternion.LookRotation(-directionToCamera, Vector3.up);
-    
-    }
+    // Smooth follow with Lerp/Slerp
+    float lerpSpeed = 7.5f; 
+    transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * lerpSpeed);
+    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * lerpSpeed);
+}
 }
