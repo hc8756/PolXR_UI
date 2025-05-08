@@ -11,7 +11,7 @@ public class MinimapControl : MonoBehaviour//, IMixedRealityPointerHandler
     public Transform Location;
     public Transform User;
     public Camera MinimapCamera;
-    public Vector3 MapCamPosition = new Vector3(-12.5f, 100f, -90f);
+    public Vector3 MapCamPosition = new Vector3(200f, 10f, -65f);
     public float ViewSize = 60f;
 
     // Synchronize between main scene and minimap.
@@ -28,9 +28,21 @@ public class MinimapControl : MonoBehaviour//, IMixedRealityPointerHandler
     void Start()
     {
         PositionObj.SetActive(true);
-        string sceneName = SceneManager.GetActiveScene().name == "antarctica" ? "Antarctica" : "Petermann";
-        sceneName = "surface";
-        Location = GameObject.Find(sceneName).transform;
+        string sceneName = SceneManager.GetActiveScene().name.ToLower();
+        string fallbackName = sceneName.Contains("antarctica") ? "Antarctica" : "Petermann";
+        GameObject found = GameObject.Find(fallbackName);
+        if(found!=null)
+        {
+            Location = found.transform;
+        }
+        /*else
+        {
+            Debug.LogError("Minimap location target not found");
+        }*/
+        //string sceneName = SceneManager.GetActiveScene().name == "antarctica" ? "Antarctica" : "Petermann";
+       //sceneName = "surface";
+        //Location = GameObject.Find(sceneName).transform;
+
     }
 
     // Update is called once per frame
@@ -48,10 +60,21 @@ public class MinimapControl : MonoBehaviour//, IMixedRealityPointerHandler
         else PositionObj.GetComponent<MeshRenderer>().material = Normal;
 
         // Setting the height of the mark.
+        /*
         Vector3 newPosition = PositionObj.transform.parent.position;
         newPosition.y = Location.position.y + MapCamPosition.y * 0.9f;
         PositionObj.transform.position = newPosition;
         PositionObj.transform.eulerAngles = new Vector3(90, 0, 0);
+        */
+        /*
+        Vector3 newPosition = User.position;
+        newPosition.y = Location.position.y + MapCamPosition.y * 0.9f; // -0.85
+        PositionObj.transform.position = newPosition;
+        */
+        Vector3 localPos = Location.InverseTransformPoint(User.position);
+        Vector3 mapPos = Location.TransformPoint(localPos);
+        mapPos.y = Location.position.y + MapCamPosition.y * 0.9f -0.85f;
+        PositionObj.transform.position = mapPos;
     }
 
     // Translate to the target point.

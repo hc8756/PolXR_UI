@@ -6,90 +6,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 
-/*
-// this code allows xr grabbable right on the parent
-public class MenuController : MonoBehaviour
-{
-    public Transform user;              // The user's position (e.g. camera rig)
-    public float offsetY = 0.8f;        // Waist height offset
-    public float followRadius = 1.0f;   // Radius from user to follow
-    public float maxDistance = 2.0f;    // Max distance user can drag the menu from themselves
-
-    private bool isBeingDragged = false;
-    private XRGrabInteractable grabInteractable;
-
-    void Start()
-    {
-        grabInteractable = GetComponent<XRGrabInteractable>();
-        if (grabInteractable != null)
-        {
-            grabInteractable.selectEntered.AddListener(OnGrab);
-            grabInteractable.selectExited.AddListener(OnRelease);
-        }
-    }
-
-    void OnDestroy()
-    {
-        if (grabInteractable != null)
-        {
-            grabInteractable.selectEntered.RemoveListener(OnGrab);
-            grabInteractable.selectExited.RemoveListener(OnRelease);
-        }
-    }
-
-    void OnGrab(SelectEnterEventArgs args)
-    {
-        //Debug.Log("Drag starts now");
-        isBeingDragged = true;
-    }
-
-    void OnRelease(SelectExitEventArgs args)
-    {
-        isBeingDragged = false;
-    }
-
-    void Update()
-    {
-        if (!isBeingDragged)
-        {
-            Vector3 waistPosition = user.position + Vector3.up * offsetY;
-
-            Vector3 cameraForward = user.forward;
-            cameraForward.y = 0;
-            cameraForward.Normalize();
-
-            transform.position = waistPosition + cameraForward * followRadius;
-        }
-        else
-        {
-            // Constrain menu within a max distance from the user
-            Vector3 offset = transform.position - user.position;
-            if (offset.magnitude > maxDistance)
-            {
-                offset = offset.normalized * maxDistance;
-                transform.position = user.position + offset;
-            }
-        }
-
-        // Always face the user horizontally
-        Vector3 directionToCamera = user.position - transform.position;
-        directionToCamera.y = 0;
-        transform.rotation = Quaternion.LookRotation(-directionToCamera, Vector3.up);
-    }
-}
-
-
-*/
-
-
 
 // original working code without grabbing functionality
 public class MenuController : MonoBehaviour
 {
      [SerializeField] public Transform user;
      public GameObject mainMenu;
+     public GameObject mainMenuTitle;
      public GameObject radarMenu;
+     public GameObject radarMenuTitle;
      public GameObject mapMenu;
+     public GameObject mapMenuTitle;
 
      private Vector3 offset=new Vector3(0.0f,0.0f,0.0f);
     float radius= 0.15f;
@@ -97,6 +24,9 @@ public class MenuController : MonoBehaviour
 
     void Start()
     {
+        radarMenuTitle.SetActive(false);
+        mapMenuTitle.SetActive(false);
+        mainMenuTitle.SetActive(false);
     }
     void Update()
     {
@@ -114,13 +44,16 @@ public class MenuController : MonoBehaviour
 
     public void ToggleMain(){
         mainMenu.SetActive(!mainMenu.activeSelf);
+        mainMenuTitle.SetActive(!mainMenuTitle.activeSelf);
     }
 
     public void ToggleRadar(){
         radarMenu.SetActive(!radarMenu.activeSelf);
+        radarMenuTitle.SetActive(!radarMenuTitle.activeSelf);
     }
     public void ToggleMap(){
         mapMenu.SetActive(!mapMenu.activeSelf);
+        mapMenuTitle.SetActive(!mapMenuTitle.activeSelf);
     }
 }
 
