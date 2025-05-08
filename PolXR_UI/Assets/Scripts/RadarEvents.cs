@@ -19,7 +19,7 @@ public class RadarEvents : MonoBehaviour
     protected bool loaded = false;
 
     // The transparency value.
-    protected float alpha = 1.0f;
+    public float alpha = 1.0f;
 
     // Keep the original scale.
     protected float scaleX, scaleY, scaleZ;
@@ -29,6 +29,7 @@ public class RadarEvents : MonoBehaviour
     protected Vector3 rotation;
 
     // The mark shown on the minimap
+    
     public GameObject radarMark;
     protected bool newPointAdded = false;
     protected Vector3 newPointPos;
@@ -39,6 +40,7 @@ public class RadarEvents : MonoBehaviour
         scaleX = this.transform.localScale.x;
         scaleY = this.transform.localScale.y;
         scaleZ = this.transform.localScale.z;
+
     }
 
     // Return the original scale.
@@ -58,6 +60,11 @@ public class RadarEvents : MonoBehaviour
         if ((onlyLower && alpha > newAlpha) || !onlyLower) alpha = newAlpha;
         transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f, newAlpha);
         transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f, newAlpha);
+    }
+
+    public void UpdateOpacity(float value){
+        alpha=value;
+        transform.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, alpha);
     }
 
     // Sychronize the parameters for the main/radar menu.

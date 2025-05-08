@@ -145,12 +145,12 @@ public class DataLoader : MonoBehaviour
         SetButtonsForMenus();
 
         // Set Slider Functionality
-        SetSlidersForMenus(radarContainer);
+        //SetSlidersForMenus(radarContainer);
 
         DisableAllRadarObjects(radarContainer);
 
 
-        //DisableMenus();
+        DisableMenus();
     }
 
     private void DisableAllRadarObjects(GameObject radarContainer)
@@ -303,6 +303,7 @@ public class DataLoader : MonoBehaviour
                         //XRGeneralGrabTransformer IradarGrabTransformer = radarMesh.AddComponent<XRGeneralGrabTransformer>();
                         //GrabTransformerRotationAxisLock LockObj = radarMesh.AddComponent<GrabTransformerRotationAxisLock>(); //Sample Script Changed
 
+                        RadarEvents thisRadarEvent= radarMesh.AddComponent<RadarEvents>();
 
                         int RadarGramLayer = LayerMask.NameToLayer("Radargram");
                         radarMesh.layer = RadarGramLayer;
@@ -495,6 +496,7 @@ public class DataLoader : MonoBehaviour
                 {
                     child.gameObject.GetComponent<LineRenderer>().material.color = Color.green;
                     radarMenu.SetActive(true);
+                    SetRadarGramMenu(child);
                 }
                 else
                 {
@@ -545,8 +547,8 @@ public class DataLoader : MonoBehaviour
 
     void OpenHome()
     {
-        //mainMenu.SetActive(true);
-        //radarMenu.SetActive(false);
+        mainMenu.SetActive(true);
+        radarMenu.SetActive(false);
     }
 
     void GoToRadargram()
@@ -613,23 +615,14 @@ public class DataLoader : MonoBehaviour
         Button mmHomeScreen = GameObject.Find("MainMenu/Buttons/ButtonHomeScreen").GetComponent<Button>(); // NOT IMPLEMENTED
     }
 
-    private void SetSlidersForMenus(GameObject radarContainer){
+    private void SetRadarGramMenu(Transform selectedFlightline){
+        GameObject selectedRadar= selectedFlightline.parent.GetChild(0).GetChild(0).gameObject;
         Slider rmOpacity= GameObject.Find("RadarMenu/Sliders/Opacity").GetComponent<Slider>();
-        rmOpacity.onValueChanged.AddListener((value)=>UpdateOpacity(value,radarContainer));
+        rmOpacity.value=selectedRadar.GetComponent<RadarEvents>().alpha;
+        rmOpacity.onValueChanged.AddListener((value)=>selectedRadar.GetComponent<RadarEvents>().UpdateOpacity(value));
     }
 
-    void UpdateOpacity(float value,GameObject radarContainer){
-        foreach (Transform segment in radarContainer.transform)
-        {
-            foreach (Transform child in segment)
-            {
-                if (child.name.StartsWith("Data")) // Radar objects start with "Data"
-                {
-                    child.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, value);
-                }
-            }
-        }
-    }
+
 
     void DisableMenus()
     {
