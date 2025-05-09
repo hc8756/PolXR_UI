@@ -618,6 +618,8 @@ public class DataLoader : MonoBehaviour
     private void SetRadarGramMenu(Transform selectedFlightline){
         GameObject selectedRadar= selectedFlightline.parent.GetChild(0).GetChild(0).gameObject;
         Slider rmOpacity= GameObject.Find("RadarMenu/Sliders/Opacity").GetComponent<Slider>();
+        //
+        rmOpacity.onValueChanged.RemoveAllListeners();
         rmOpacity.value=selectedRadar.GetComponent<RadarEvents>().alpha;
         rmOpacity.onValueChanged.AddListener((value)=>selectedRadar.GetComponent<RadarEvents>().UpdateOpacity(value));
     }
