@@ -8,6 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.Samples.Hands;
 using UnityEngine.XR.Interaction.Toolkit.Transformers;
+using TMPro;
 //using Fusion;
 
 
@@ -617,11 +618,26 @@ public class DataLoader : MonoBehaviour
 
     private void SetRadarGramMenu(Transform selectedFlightline){
         GameObject selectedRadar= selectedFlightline.parent.GetChild(0).GetChild(0).gameObject;
+        
+        //Opacity logic
         Slider rmOpacity= GameObject.Find("RadarMenu/Sliders/Opacity").GetComponent<Slider>();
-        //
         rmOpacity.onValueChanged.RemoveAllListeners();
         rmOpacity.value=selectedRadar.GetComponent<RadarEvents>().alpha;
         rmOpacity.onValueChanged.AddListener((value)=>selectedRadar.GetComponent<RadarEvents>().UpdateOpacity(value));
+
+        //Z exaggeration logic
+        Slider rmZExag= GameObject.Find("RadarMenu/Sliders/ZSlider").GetComponent<Slider>();
+        rmZExag.onValueChanged.RemoveAllListeners();
+        rmZExag.value=selectedRadar.GetComponent<RadarEvents>().scaleZ;
+        rmZExag.onValueChanged.AddListener((value)=>selectedRadar.GetComponent<RadarEvents>().SetScaleZ(value));
+
+         //XY exaggeration logic
+         /*
+        Slider rmXYExag= GameObject.Find("RadarMenu/Sliders/XYSlider").GetComponent<Slider>();
+        rmXYExag.onValueChanged.RemoveAllListeners();
+        rmXYExag.value=selectedRadar.GetComponent<RadarEvents>().scaleX;
+        rmXYExag.onValueChanged.AddListener((value)=>selectedRadar.GetComponent<RadarEvents>().SetScaleXY(value));*/
+        
     }
 
 
